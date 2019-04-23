@@ -20,13 +20,10 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 public class ElasticsearchConfiguration {
 
 	@Value("${elasticsearch.host}")
-    private String EsHost;
+    private String esHost;
 
     @Value("${elasticsearch.port}")
-    private int EsPort;
-
-    @Value("${elasticsearch.clustername}")
-    private String EsClusterName;
+    private int esPort;
 
     @Bean
     public Client client() throws Exception {
@@ -40,7 +37,7 @@ public class ElasticsearchConfiguration {
 //                .addTransportAddress(
 //				  (TransportAddress) new InetSocketTransportAddress(InetAddress.getByName(EsHost), EsPort));
         TransportClient client = new PreBuiltTransportClient(esSettings)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(esHost), esPort));
         
         return client;
     }
